@@ -44,10 +44,8 @@ int32_t move_on_level(level_t *level, movable_t *movable, const float delta_x, c
                 movable->x = new_x;
             }
         }
-    }
-
-    //moving left
-    if(new_x < movable->x)
+    }    
+    else if(new_x < movable->x)  //moving left
     {
         uint32_t cellX = new_x / level->cell_size;  //check the cell where i'm moving on
         uint32_t cellY = (movable->y + movable->height - 1) / level->cell_size;  //check on the feets if i can move
