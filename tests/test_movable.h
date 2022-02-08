@@ -81,6 +81,26 @@ CLOVE_TEST(MovableWallHitOnNeckMovingLeft)
     CLOVE_FLOAT_EQ(movable.x, 64);
 }
 
+CLOVE_TEST(MovableWallHitMovingUp)
+{
+    level_t level;
+    int32_t map[] = {0x101, 0, 0, 0};
+    level_init(&level, 2, 2, 64, map);
+    movable_t movable = {55, 70, 32, 32};  
+    move_on_level(&level, &movable, 0, -30);
+    CLOVE_FLOAT_EQ(movable.y, 64);
+}
+
+CLOVE_TEST(MovableWallHitMovingDown)
+{
+    level_t level;
+    int32_t map[] = {0, 0, 0, 0x101};
+    level_init(&level, 2, 2, 64, map);
+    movable_t movable = {55, 20, 32, 32};  
+    move_on_level(&level, &movable, 0, 30);
+    CLOVE_FLOAT_EQ(movable.y, 32);
+}
+
 CLOVE_SUITE(MovableSuite)
 {
     CLOVE_SUITE_TESTS(
@@ -91,6 +111,8 @@ CLOVE_SUITE(MovableSuite)
         MovableWallHitOnFeetMovingRight,
         MovableWallHitOnNeckMovingRight,
         MovableWallHitOnFeetMovingLeft,
-        MovableWallHitOnNeckMovingLeft
+        MovableWallHitOnNeckMovingLeft,
+        MovableWallHitMovingUp,
+        MovableWallHitMovingDown
     );
 }

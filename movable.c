@@ -72,8 +72,60 @@ int32_t move_on_level(level_t *level, movable_t *movable, const float delta_x, c
             }
         }
     }
+    else if(new_y < movable->y)  //moving up
+    {
+        uint32_t cellX = movable->x / level->cell_size;  //check left up
+        uint32_t cellY = new_y / level->cell_size;  
 
-    movable->y = new_y;
+        cell = level_cell(level, cellX, cellY);
 
+        if(cell && BLOCK_MASK_UNWALKABLE)
+        {
+            movable->y = cellY * level->cell_size + level->cell_size;            
+        }
+        else
+        {
+            cellX = (movable->x + movable->width - 1) / level->cell_size;  //check right up
+
+            cell = level_cell(level, cellX, cellY);
+
+            if(cell && BLOCK_MASK_UNWALKABLE)
+            {
+                movable->y = cellY * level->cell_size + level->cell_size; 
+            }
+            else
+            {
+                movable->y = new_y;
+            }
+        }
+    }
+    else if(new_y > movable->y)  //moving down
+    {      
+        uint32_t cellX = movable->x / level->cell_size;  //check left down 
+        uint32_t cellY = (movable->y + movable->height) / level->cell_size;  
+
+        cell = level_cell(level, cellX, cellY);
+
+        if(cell && BLOCK_MASK_UNWALKABLE)
+        {
+            movable->y = (cellY * level->cell_size) - movable->height;            
+        }
+        else
+        {
+            cellX = (movable->x + movable->width - 1) / level->cell_size;  //check right down
+
+            cell = level_cell(level, cellX, cellY);
+
+            if(cell && BLOCK_MASK_UNWALKABLE)
+            {
+                movable->y = (cellY * level->cell_size) - movable->height; 
+            }
+            else
+            {
+                movable->y = new_y;
+            }
+        }
+    }
+    
     return cell;
 }
