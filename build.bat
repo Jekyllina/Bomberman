@@ -1,1 +1,2 @@
+clang.exe -o Networking\client.exe -I Networking -L ws2_32.lib Networking\client.c -fuse-ld=llvm-lib
 clang.exe -o bomberman.exe -I .\SDL2-2.0.20\include\ -L .\SDL2-2.0.20\lib\x64\ .\main.c .\level.c .\movable.c -Xlinker /subsystem:console -lSDL2main -lSDL2 -lshell32 && bomberman.exe

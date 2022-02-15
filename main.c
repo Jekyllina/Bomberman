@@ -1,9 +1,12 @@
 #include <SDL.h>
 #include "bomberman.h"
 #include "level001.h"
+#include "client.h"
 
 int main(int argc, char **argv)
 {
+    InitializeSocket();
+
     level_t level001;
 
     level_init(&level001, 8, 8, 64, level001_cells);
@@ -117,6 +120,8 @@ int main(int argc, char **argv)
         move_on_level(&level001, &player0.movable, delta_right + delta_left, delta_down + delta_up);
         player0_rect.x = player0.movable.x;
         player0_rect.y = player0.movable.y;
+
+        UpdatePositionsWithServer(player0.movable.x, player0.movable.y);
 
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
         SDL_RenderFillRect(renderer, &player0_rect);
