@@ -38,6 +38,8 @@ int main(int argc, char **argv)
         return -1;
     }
 
+    set_nb(s);
+
     printf("socket %d created\n", s);
     
     struct sockaddr_in sin;
@@ -184,7 +186,7 @@ int main(int argc, char **argv)
         memcpy(pack, &myPacket, 12);
         int sent_bytes = sendto(s, pack, 12, 0, (struct sockaddr*)&sin, sizeof(sin));
         printf("sent %d bytes via UDP\n", sent_bytes);
-        Sleep(1000);
+        //Sleep(1000);
 
 
         //receive
