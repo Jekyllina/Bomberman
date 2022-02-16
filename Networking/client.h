@@ -1,5 +1,7 @@
 #pragma once
 
+#pragma comment(lib, "ws2_32.lib")
+
 #ifdef _WIN32
 #include <WinSock2.h>
 #include <ws2tcpip.h>
@@ -15,6 +17,3 @@ typedef struct packetPositions
     float posX;
     float posY;
 } packetPositions_t;
-
-void InitializeSocket();
-void UpdatePositionsWithServer(float X, float Y);
