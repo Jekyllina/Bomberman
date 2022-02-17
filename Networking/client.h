@@ -17,3 +17,7 @@ typedef struct packetPositions
     float posX;
     float posY;
 } packetPositions_t;
+
+void InitializeSocket();
+void SendPacket(float X, float Y);
+packetPositions_t ReceivePacket();
