@@ -60,8 +60,8 @@ class Server:
                     return
 
                 now = time.time()
-                if now - self.players[sender].last_update < (1 / self.tolerance):
-                    raise DosAttemptDetected()
+                #if now - self.players[sender].last_update < (1 / self.tolerance):
+                    #raise DosAttemptDetected()
             else:
                 self.players[sender] = Player(sender)  #se è un nuovo giocatore lo aggiungiamo al dizionario
 
@@ -70,10 +70,10 @@ class Server:
             self.broadcast(sender, auth, x, y)
             self.check_dead_clients()
             print(self.players)            
-        except DosAttemptDetected:
-            print('Dos detected from {0}, kicking it out'.format(sender))
+        #except DosAttemptDetected:
+            #print('Dos detected from {0}, kicking it out'.format(sender))
             # del(self.players[sender])
-            self.players[sender] = None  # banned!
+            #self.players[sender] = None  # banned!
         except InvalidAuthField:
             print('Invalid packet auth detected from {0}'.format(sender))
         except InvalidPacketSize:

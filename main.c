@@ -182,7 +182,7 @@ int main(int argc, char **argv)
         myPacket.posY = player0.movable.y;  
 
         //send
-        char *pack = malloc(12);        
+        char *pack[12];        
         memcpy(pack, &myPacket, 12);
         int sent_bytes = sendto(s, pack, 12, 0, (struct sockaddr*)&sin, sizeof(sin));
         printf("sent %d bytes via UDP\n", sent_bytes);
@@ -190,7 +190,7 @@ int main(int argc, char **argv)
 
 
         //receive
-        char *packReceive = malloc(12);
+        char *packReceive[12];
         struct sockaddr_in sender_in;
         int sender_in_size = sizeof(sender_in);
         int len = recvfrom(s, packReceive, 12, 0, (struct sockaddr *)&sender_in, &sender_in_size);
