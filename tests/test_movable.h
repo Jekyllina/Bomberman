@@ -97,7 +97,7 @@ CLOVE_TEST(MovableWallHitMovingDown)
     int32_t map[] = {0, 0, 0, 0x101};
     level_init(&level, 2, 2, 64, map);
     movable_t movable = {55, 20, 32, 32};  
-    move_on_level(&level, &movable, 0, 30);
+    move_on_level(&level, &movable, 0, 20);
     CLOVE_FLOAT_EQ(movable.y, 32);
 }
 

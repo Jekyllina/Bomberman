@@ -30,6 +30,7 @@ typedef struct movable
 typedef struct bomberman
 {
     movable_t movable;
+    uint32_t auth;    
     uint32_t number_of_bombs;
     uint32_t dropped_bombs;
     uint32_t bomb_power;

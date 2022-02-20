@@ -61,6 +61,7 @@ int main(int argc, char **argv)
     level_init(&level001, 8, 8, 64, level001_cells);
 
     bomberman_t player0;
+    player0.auth = 5;
     player0.movable.x = 100;
     player0.movable.y = 100;
     player0.movable.width = 32;
@@ -84,6 +85,10 @@ int main(int argc, char **argv)
     float delta_up = 0;
 
     int running = 1;
+
+
+    bomberman_t player1;
+    SDL_Rect player1_rect = {100, 100, 32, 32};
 
     while(running)
     {
@@ -173,8 +178,20 @@ int main(int argc, char **argv)
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
         SDL_RenderFillRect(renderer, &player0_rect);
 
+
+        if(player1.auth != 0)
+        {            
+            player1_rect.x = player1.movable.x;
+            player1_rect.y = player1.movable.y;     
+
+            SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+            SDL_RenderFillRect(renderer, &player1_rect); 
+        }     
+        
+
         SDL_RenderPresent(renderer);   
 
+        
 
         packetPositions_t myPacket;
         myPacket.auth = 5;
@@ -185,7 +202,7 @@ int main(int argc, char **argv)
         char *pack[12];        
         memcpy(pack, &myPacket, 12);
         int sent_bytes = sendto(s, pack, 12, 0, (struct sockaddr*)&sin, sizeof(sin));
-        printf("sent %d bytes via UDP\n", sent_bytes);
+        //printf("sent %d bytes via UDP\n", sent_bytes);
         //Sleep(1000);
 
 
@@ -193,16 +210,23 @@ int main(int argc, char **argv)
         char *packReceive[12];
         struct sockaddr_in sender_in;
         int sender_in_size = sizeof(sender_in);
-        int len = recvfrom(s, packReceive, 12, 0, (struct sockaddr *)&sender_in, &sender_in_size);
-
+        int len = recvfrom(s, packReceive, 12, 0, (struct sockaddr *)&sender_in, &sender_in_size);        
+        
         if (len > 0)
         {
             packetPositions_t packetReceived;
             memcpy(&packetReceived, packReceive, 12);            
-            printf("Other client %d, PosX: %f, PosY: %f", packetReceived.auth, packetReceived.posX, packetReceived.posY);
+            //printf("Other client %d, PosX: %f, PosY: %f", packetReceived.auth, packetReceived.posX, packetReceived.posY);
+            
+            player1.auth = packetReceived.auth;
+            player1.movable.x = packetReceived.posX;
+            player1.movable.y = packetReceived.posY;
+            player1.movable.width = 32;
+            player1.movable.height = 32;
+            player1.movable.speed = 48;                     
         }     
         else
-            continue;  
+           continue;                    
     }
 
     SDL_Quit();
