@@ -15,7 +15,7 @@ int set_nb(int s)
 }
 
 int s; 
-struct sockaddr_in sin;
+struct sockaddr_in sinIn;
 
 void InitializeSocket()
 {
@@ -41,9 +41,9 @@ void InitializeSocket()
     printf("socket %d created\n", s);
     
     
-    inet_pton(AF_INET, "127.0.0.1", &sin.sin_addr); 
-    sin.sin_family = AF_INET;
-    sin.sin_port = htons(9999); 
+    inet_pton(AF_INET, "127.0.0.1", &sinIn.sin_addr); 
+    sinIn.sin_family = AF_INET;
+    sinIn.sin_port = htons(9999); 
 
     unsigned int timeout = 1000;
 
@@ -64,7 +64,7 @@ void SendPacket(float X, float Y)
     //send
     char *pack = malloc(12);        
     memcpy(pack, &myPacket, 12);
-    int sent_bytes = sendto(s, pack, 12, 0, (struct sockaddr*)&sin, sizeof(sin));
+    int sent_bytes = sendto(s, pack, 12, 0, (struct sockaddr*)&sinIn, sizeof(sinIn));
     printf("sent %d bytes via UDP\n", sent_bytes);
     //Sleep(1000);
 }
