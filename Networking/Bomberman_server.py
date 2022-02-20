@@ -21,14 +21,16 @@ class Player:
         self.y = 0
         self.last_update = None  #per tenere traccia dell'ultimo update, in modo che se manda troppi pacchetti viene cacciato 
         self.auth = None  #numero intero che manda il client per identificarsi 
-        print('new player', self.signature)
+        print('new player', self.signature)      
+    
 
     def update(self, auth, x, y):
         self.x = x
         self.y = y
 
+
         if self.auth is None:
-            self.auth = auth  #la prima volta che ti vedo registro il tuo auth
+            self.auth = auth  #la prima volta che ti vedo registro il tuo auth            
             print('auth for {0} is {1}', self.signature, self.auth)
         elif self.auth != auth:  #una volta che hai un auth, tutti i pacchetti che mi mandi devono avere sempre lo stesso
             raise InvalidAuthField()
@@ -63,8 +65,8 @@ class Server:
                 #if now - self.players[sender].last_update < (1 / self.tolerance):
                     #raise DosAttemptDetected()
             else:
-                self.players[sender] = Player(sender)  #se è un nuovo giocatore lo aggiungiamo al dizionario
-
+                self.players[sender] = Player(sender)  #se è un nuovo giocatore lo aggiungiamo al dizionario       
+                
             auth, x, y = struct.unpack('Iff', packet)  #facciamo un unpack del pacchetto per prenderci i vari valori
             self.players[sender].update(auth, x, y)  #faccio l'update del player con le coordinate che mi ha mandato
             self.broadcast(sender, auth, x, y)
